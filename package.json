@@ -2,13 +2,13 @@
   "name": "nerd-bot",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "index.js",
   "engines": {
     "node": "18.x"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.ts"
+    "start": "node index"
   },
   "dependencies": {
     "discord-fetch-all": "^3.0.2",
