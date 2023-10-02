@@ -1,5 +1,5 @@
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
-const fetchAll = require('discord-fetch-all');
+import { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
+import fetchAll from "../utils/fetchAll";
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -9,13 +9,13 @@ module.exports = {
     async execute(interaction, client) {
         await interaction.deferReply();
 
-        const messages = await fetchAll.messages(client.channels.cache.get('995766209708576829')),
+        const messages = await fetchAll(client.channels.cache.get('995766209708576829')),
             message = messages[Math.floor(Math.random() * messages.length)];
-        
+
         const
             messageText = message.content?.replace('_ _', '').replace(/^\s+|\s+$/g, '') || null,
             messageAttachment = message.attachments?.first()?.url || null;
-        
+
         const quoteContent = messageAttachment || `>>> ${messageText}` || 'Er is een fout opgetreden.'
 
         await interaction.editReply({

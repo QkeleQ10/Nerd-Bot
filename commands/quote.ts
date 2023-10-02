@@ -1,5 +1,5 @@
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
-const fetchAll = require('discord-fetch-all');
+import { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
+import fetchAll from "../utils/fetchAll";
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -9,7 +9,7 @@ module.exports = {
     async execute(interaction, client) {
         await interaction.deferReply();
 
-        const messages = await fetchAll.messages(client.channels.cache.get('1020039878295179334')),
+        const messages = await fetchAll(client.channels.cache.get('1020039878295179334')),
             message = messages[Math.floor(Math.random() * messages.length)];
         
         const
