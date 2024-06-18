@@ -18,7 +18,7 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     async execute(interaction) {
         const channel = interaction.options.getChannel('channel')
-        const message = interaction.options.getString('message')?.replace('\\n', '\n')
+        const message = interaction.options.getString('message')?.replace(/(\\n)/gi, '\n')
         if (channel) {
             await channel.send(message)
             await interaction.reply({ content: "Sent!", ephemeral: true });
