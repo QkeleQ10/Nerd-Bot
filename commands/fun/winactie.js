@@ -5,8 +5,16 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('winactie')
         .setDescription('Lees het bericht in #announcements voor informatie.')
-        .setDefaultMemberPermissions(PermissionFlagsBits.PrioritySpeaker),
+        .setDefaultMemberPermissions(PermissionFlagsBits.SendMessages),
     async execute(interaction) {
+        const now = new Date();
+        const beginDate = new Date('2024-06-19T15:00:00+02:00');
+        const endDate = new Date('2024-06-29T23:59:59+02:00');
+        if (now < beginDate || now > endDate) {
+            interaction.reply("Er is momenteel geen winactie gaande.")
+            return
+        }
+
         const modal = new ModalBuilder()
             .setCustomId('giveaway')
             .setTitle('Winactie');
