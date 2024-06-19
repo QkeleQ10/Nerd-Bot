@@ -8,7 +8,7 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.SendMessages),
     async execute(interaction) {
         const now = new Date();
-        const beginDate = new Date('2024-06-19T15:00:00+02:00');
+        const beginDate = new Date('2024-06-19T14:00:00+02:00');
         const endDate = new Date('2024-06-29T23:59:59+02:00');
         if (now < beginDate || now > endDate) {
             interaction.reply({ content: "Er is momenteel geen winactie gaande.", ephemeral: true })
