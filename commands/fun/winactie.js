@@ -15,15 +15,6 @@ module.exports = {
             return
         }
 
-        const channelId = '1252718355291308072';
-        const channel = await interaction.client.channels.fetch(channelId);
-        const messages = await channel.messages.fetch();
-
-        if (messages.some((msg) => JSON.parse(msg.content.slice(7, -3))?.userId === interaction.user.id)) {
-            interaction.reply({ content: `Thema niet ingezonden.\n\nJe hebt al eerder een inzending gedaan. Je mag maximaal één keer inzenden.`, ephemeral: true })
-            return
-        }
-
         const modal = new ModalBuilder()
             .setCustomId('giveaway')
             .setTitle('Winactie');
@@ -76,6 +67,10 @@ module.exports = {
                     if (!submission.title === 'Magister Theme Contest' || !submission.name?.length > 4 || !submission.school?.length > 4 || !submission.options) {
                         throw new Error()
                     }
+
+                    const channelId = '1252718355291308072';
+                    const channel = await interaction.client.channels.fetch(channelId);
+                    const messages = await channel.messages.fetch();
 
                     if (messages.some((msg) => JSON.parse(msg.content.slice(7, -3))?.userId === modalInteraction.user.id || JSON.parse(msg.content.slice(7, -3))?.name === submission.name)) {
                         explanation = "Je hebt al eerder een inzending gedaan. Je mag maximaal één keer inzenden."
