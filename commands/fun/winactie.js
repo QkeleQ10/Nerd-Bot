@@ -50,7 +50,7 @@ module.exports = {
         await interaction.showModal(modal);
         await interaction.awaitModalSubmit({ time: 120_000, filter: modalInteraction => !!modalInteraction })
             .then(async modalInteraction => {
-                let explanation = "Je inzending is ongeldig. Kopieer je inzending vanuit Magister door `Ctrl` `Shift` `\\` in te drukken en te rechtsklikken op het Magister-logo. Probeer het vervolgens opnieuw."
+                let explanation = "Je inzending is ongeldig. Kopieer je inzending vanuit Magister door `Ctrl` `Shift` `Spatie` in te drukken en te rechtsklikken op het Magister-logo. Probeer het vervolgens opnieuw."
                 try {
                     const verification = Number(modalInteraction.fields.getTextInputValue('verification'))
                     const expectedAnsw = operator === '+'
