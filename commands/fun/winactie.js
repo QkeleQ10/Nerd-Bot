@@ -110,7 +110,7 @@ module.exports = {
                         return chunks
                     }
 
-                    const splitSubmission = chunkSubstr(JSON.stringify(submission, null, 2), 1085)
+                    const splitSubmission = chunkSubstr(JSON.stringify(submission, null, 2), 1985)
 
                     for (let i = 0; i < splitSubmission.length; i++) {
                         await channel.send('```json\n' + splitSubmission[i] + '```')
