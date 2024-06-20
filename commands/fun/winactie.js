@@ -99,7 +99,18 @@ module.exports = {
                         throw new Error()
                     }
 
-                    const splitSubmission = JSON.stringify(submission, null, 2).match(new RegExp(`.{1,1085}`, 'g')) || []
+                    function chunkSubstr(str, size) {
+                        const numChunks = Math.ceil(str.length / size)
+                        const chunks = new Array(numChunks)
+
+                        for (let i = 0, o = 0; i < numChunks; ++i, o += size) {
+                            chunks[i] = str.substr(o, size)
+                        }
+
+                        return chunks
+                    }
+
+                    const splitSubmission = chunkSubstr(JSON.stringify(submission, null, 2), 1085)
 
                     for (let i = 0; i < splitSubmission.length; i++) {
                         await channel.send('```json\n' + splitSubmission[i] + '```')
