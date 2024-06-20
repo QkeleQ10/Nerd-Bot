@@ -96,11 +96,15 @@ module.exports = {
                         throw new Error()
                     }
 
-                    channel.send('```json\n' + JSON.stringify(submission, null, 2) + '```')
+                    const splitSubmission = JSON.stringify(submission, null, 2).match(new RegExp(`.{1,1085}`, 'g')) || []
 
-                    modalInteraction.reply({ content: "Thema ingezonden!", ephemeral: true })
+                    for (let i = 0; i < splitSubmission.length; i++) {
+                        await channel.send('```json\n' + splitSubmission[i] + '```')
+                    }
+
+                    await modalInteraction.reply({ content: "Thema ingezonden!", ephemeral: true })
                 } catch (error) {
-                    modalInteraction.reply({ content: `Thema niet ingezonden.\n\n${explanation || error}`, ephemeral: true })
+                    await modalInteraction.reply({ content: `Thema niet ingezonden.\n\n${explanation || error}`, ephemeral: true })
                 }
             })
             .catch(err => console.log('No modal submit interaction was collected'));
