@@ -110,10 +110,10 @@ module.exports = {
                         return chunks
                     }
 
-                    const splitSubmission = chunkSubstr(JSON.stringify(submission), 1985)
+                    const splitSubmission = chunkSubstr(JSON.stringify(submission), 1992)
 
                     for (let i = 0; i < splitSubmission.length; i++) {
-                        await channel.send('```json\n' + splitSubmission[i] + '```')
+                        await channel.send('```\n' + splitSubmission[i] + '```')
                     }
 
                     await modalInteraction.reply({ content: "Thema ingezonden!", ephemeral: true })
