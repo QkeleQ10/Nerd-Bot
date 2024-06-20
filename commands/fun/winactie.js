@@ -41,17 +41,20 @@ module.exports = {
         const submissionInput2 = new TextInputBuilder()
             .setCustomId('submission2')
             .setLabel("Plak deel 2 (indien van toepassing).")
-            .setStyle(TextInputStyle.Paragraph);
+            .setStyle(TextInputStyle.Paragraph)
+            .setRequired(false);
 
         const submissionInput3 = new TextInputBuilder()
             .setCustomId('submission3')
             .setLabel("Plak deel 3 (indien van toepassing).")
-            .setStyle(TextInputStyle.Paragraph);
+            .setStyle(TextInputStyle.Paragraph)
+            .setRequired(false);
 
         const submissionInput4 = new TextInputBuilder()
             .setCustomId('submission4')
             .setLabel("Plak deel 4 (indien van toepassing).")
-            .setStyle(TextInputStyle.Paragraph);
+            .setStyle(TextInputStyle.Paragraph)
+            .setRequired(false);
 
         // An action row only holds one text input,
         // so you need one action row per text input.
