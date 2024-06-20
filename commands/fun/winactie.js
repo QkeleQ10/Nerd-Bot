@@ -19,18 +19,11 @@ module.exports = {
             .setCustomId('giveaway')
             .setTitle('Winactie');
 
-        const favoriteColorInput = new TextInputBuilder()
-            .setCustomId('submission')
-            .setLabel("Plak je inzending in dit tekstvak.")
-            .setStyle(TextInputStyle.Paragraph)
-            .setMinLength(1)
-            .setRequired(true);
-
         const random1 = Math.floor(Math.random() * 6) + 5,
             random2 = Math.floor(Math.random() * 4) + 1,
             operator = Math.random() > 0.5 ? '+' : '-'
 
-        const hobbiesInput = new TextInputBuilder()
+        const verificationInput = new TextInputBuilder()
             .setCustomId('verification')
             .setLabel(`Los op: ${random1} ${operator} ${random2}`)
             .setMaxLength(2)
@@ -38,13 +31,38 @@ module.exports = {
             .setRequired(true)
             .setStyle(TextInputStyle.Short);
 
+        const submissionInput1 = new TextInputBuilder()
+            .setCustomId('submission1')
+            .setLabel("Plak deel 1 van je inzending.")
+            .setStyle(TextInputStyle.Paragraph)
+            .setMinLength(1)
+            .setRequired(true);
+
+        const submissionInput2 = new TextInputBuilder()
+            .setCustomId('submission2')
+            .setLabel("Plak deel 2 (indien van toepassing).")
+            .setStyle(TextInputStyle.Paragraph);
+
+        const submissionInput3 = new TextInputBuilder()
+            .setCustomId('submission3')
+            .setLabel("Plak deel 3 (indien van toepassing).")
+            .setStyle(TextInputStyle.Paragraph);
+
+        const submissionInput4 = new TextInputBuilder()
+            .setCustomId('submission4')
+            .setLabel("Plak deel 4 (indien van toepassing).")
+            .setStyle(TextInputStyle.Paragraph);
+
         // An action row only holds one text input,
         // so you need one action row per text input.
-        const firstActionRow = new ActionRowBuilder().addComponents(favoriteColorInput);
-        const secondActionRow = new ActionRowBuilder().addComponents(hobbiesInput);
+        const row1 = new ActionRowBuilder().addComponents(verificationInput);
+        const row2 = new ActionRowBuilder().addComponents(submissionInput1);
+        const row3 = new ActionRowBuilder().addComponents(submissionInput3);
+        const row4 = new ActionRowBuilder().addComponents(submissionInput4);
+        const row5 = new ActionRowBuilder().addComponents(submissionInput5);
 
         // Add inputs to the modal
-        modal.addComponents(firstActionRow, secondActionRow);
+        modal.addComponents(row1, row2, row3, row4, row5);
 
         // Show the modal to the user
         await interaction.showModal(modal);
@@ -62,9 +80,10 @@ module.exports = {
                         throw new Error()
                     }
 
-                    const submission = { userId: modalInteraction.user.id, ...JSON.parse(atob(modalInteraction.fields.getTextInputValue('submission'))) }
+                    const encodedSubmission = [modalInteraction.fields.getTextInputValue('submission1'), modalInteraction.fields.getTextInputValue('submission2'), modalInteraction.fields.getTextInputValue('submission3'), modalInteraction.fields.getTextInputValue('submission4')].filter(e => e?.length > 0).join('')
+                    const submission = { userId: modalInteraction.user.id, ...JSON.parse(atob(encodedSubmission)) }
 
-                    if (!submission.title === 'Magister Theme Contest' || !submission.name?.length > 4 || !submission.school?.length > 4 || !submission.options) {
+                    if (!submission.title === 'Magister Theme Contest' || !submission.name?.length > 4 || !submission.school?.length > 4 || !submission.options?.ptheme) {
                         throw new Error()
                     }
 
