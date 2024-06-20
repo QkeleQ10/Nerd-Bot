@@ -57,9 +57,9 @@ module.exports = {
         // so you need one action row per text input.
         const row1 = new ActionRowBuilder().addComponents(verificationInput);
         const row2 = new ActionRowBuilder().addComponents(submissionInput1);
-        const row3 = new ActionRowBuilder().addComponents(submissionInput3);
-        const row4 = new ActionRowBuilder().addComponents(submissionInput4);
-        const row5 = new ActionRowBuilder().addComponents(submissionInput5);
+        const row3 = new ActionRowBuilder().addComponents(submissionInput2);
+        const row4 = new ActionRowBuilder().addComponents(submissionInput3);
+        const row5 = new ActionRowBuilder().addComponents(submissionInput4);
 
         // Add inputs to the modal
         modal.addComponents(row1, row2, row3, row4, row5);
