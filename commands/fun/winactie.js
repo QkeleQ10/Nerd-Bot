@@ -85,7 +85,10 @@ module.exports = {
                     }
 
                     const encodedSubmission = [modalInteraction.fields.getTextInputValue('submission1'), modalInteraction.fields.getTextInputValue('submission2'), modalInteraction.fields.getTextInputValue('submission3'), modalInteraction.fields.getTextInputValue('submission4')].filter(e => e?.length > 0).join('')
+
+                    console.log(encodedSubmission)
                     const submission = { userId: modalInteraction.user.id, ...JSON.parse(atob(encodedSubmission)) }
+                    console.log(submission)
 
                     if (!submission.title === 'Magister Theme Contest' || !submission.name?.length > 4 || !submission.school?.length > 4 || !submission.options?.ptheme) {
                         throw new Error()
@@ -95,7 +98,7 @@ module.exports = {
                     const channel = await interaction.client.channels.fetch(channelId);
                     const messages = await channel.messages.fetch();
 
-                    if (messages.some((msg) => JSON.parse(msg.content.slice(7, -3))?.userId === modalInteraction.user.id || JSON.parse(msg.content.slice(7, -3))?.name === submission.name)) {
+                    if (messages.some((msg) => JSON.parse(msg.content.replace(/(^(```(json)?))|(```$)/gi, ''))?.userId === modalInteraction.user.id || JSON.parse(msg.content.replace(/(^(```(json)?))|(```$)/gi, ''))?.name === submission.name)) {
                         explanation = "Je hebt al eerder een inzending gedaan. Je mag maximaal één keer inzenden."
                         throw new Error()
                     }
