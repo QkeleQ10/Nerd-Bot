@@ -7,6 +7,7 @@ module.exports = {
         .setDescription('Lees het bericht in #announcements voor informatie.')
         .setDefaultMemberPermissions(PermissionFlagsBits.SendMessages),
     async execute(interaction) {
+        console.log(interaction.user.id + " used /winactie")
         const now = new Date();
         const beginDate = new Date('2024-06-19T14:00:00+02:00');
         const endDate = new Date('2024-06-29T23:59:59+02:00');
@@ -118,6 +119,7 @@ module.exports = {
 
                     await modalInteraction.reply({ content: "Thema ingezonden!", ephemeral: true })
                 } catch (error) {
+                    console.error(error)
                     await modalInteraction.reply({ content: `Thema niet ingezonden.\n\n${explanation || error}`, ephemeral: true })
                 }
             })
