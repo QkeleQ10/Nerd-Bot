@@ -98,23 +98,18 @@ module.exports = {
                     const channel = await interaction.client.channels.fetch(channelId);
                     const messages = await channel.messages.fetch();
 
-                    if (messages.some((msg) => JSON.parse(msg.content.replace(/(^(```(json)?))|(```$)/gi, ''))?.userId === modalInteraction.user.id || JSON.parse(msg.content.replace(/(^(```(json)?))|(```$)/gi, ''))?.name === submission.name)) {
-                        explanation = "Je hebt al eerder een inzending gedaan. Je mag maximaal één keer inzenden."
-                        throw new Error()
+                    if (messages.some((msg) =>
+                        isJsonString(msg.content.replace(/(^(```(json)?))|(```$)/gi, ''))
+                        && (
+                            JSON.parse(msg.content.replace(/(^(```(json)?))|(```$)/gi, ''))?.userId === modalInteraction.user.id
+                            || JSON.parse(msg.content.replace(/(^(```(json)?))|(```$)/gi, ''))?.name === submission.name
+                        )
+                    )) {
+                        explanation = "Je hebt al eerder een inzending gedaan. Je mag maximaal één keer inzenden.";
+                        throw new Error("C");
                     }
 
-                    function chunkSubstr(str, size) {
-                        const numChunks = Math.ceil(str.length / size)
-                        const chunks = new Array(numChunks)
-
-                        for (let i = 0, o = 0; i < numChunks; ++i, o += size) {
-                            chunks[i] = str.substr(o, size)
-                        }
-
-                        return chunks
-                    }
-
-                    const splitSubmission = chunkSubstr(JSON.stringify(submission), 1992)
+                    const splitSubmission = chunkSubstr(JSON.stringify(submission), 1992);
 
                     for (let i = 0; i < splitSubmission.length; i++) {
                         await channel.send('```\n' + splitSubmission[i] + '```')
@@ -129,3 +124,23 @@ module.exports = {
             .catch(err => console.log('No modal submit interaction was collected'));
     },
 };
+
+function isJsonString(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
+
+function chunkSubstr(str, size) {
+    const numChunks = Math.ceil(str.length / size);
+    const chunks = new Array(numChunks);
+
+    for (let i = 0, o = 0; i < numChunks; ++i, o += size) {
+        chunks[i] = str.substr(o, size);
+    }
+
+    return chunks;
+}
